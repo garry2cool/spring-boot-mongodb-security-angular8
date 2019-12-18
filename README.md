@@ -1,3 +1,9 @@
-# Spring Boot, Security, MongoDB, Angular 8: Build Authentication
-
-This source code is part of [Spring Boot, Security, MongoDB, Angular 8: Build Authentication](https://www.djamware.com/post/5d3332980707cc65eac46c7b/spring-boot-security-mongodb-angular-8-build-authentication) tutorial
+This POC is done to understand following topics
+  - Spring Boot
+  - JWT using spring security
+  - Angular
+  - MongoDb
+  
+ I have created simple login page, which is secure by JWT. 
+ You can create a user and login with same same.
+ Once login is done it will present product catalogue page.
