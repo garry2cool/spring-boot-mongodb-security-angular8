@@ -1,34 +1,78 @@
 <div class="example-container mat-elevation-z8">
-  <div class="example-loading-shade"
-       *ngIf="isLoadingResults">
+  <div class="example-loading-shade" *ngIf="isLoadingResults">
     <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
   </div>
-  <div class="button-row">
-    <a mat-flat-button color="primary" (click)="logout()">Logout</a>
+  <div class="row">
+    <div class="col-sm-11">
+      <a mat-flat-button color="primary" (click)="addProduct()">Add Product</a>
+    </div>
+    <div class="col-sm-1">
+      <a mat-flat-button color="primary" (click)="logout()">Logout</a>
+    </div>
   </div>
-  <div class="mat-elevation-z8">
-    <table mat-table [dataSource]="data" class="example-table">
 
-      <!-- Product ID Column -->
-      <ng-container matColumnDef="prodName">
-        <th mat-header-cell *matHeaderCellDef>Product Name</th>
-        <td mat-cell *matCellDef="let row">{{row.prodName}}</td>
-      </ng-container>
+  <div *ngIf="showProductPage">
+      <mat-card class="example-card">
+          <form [formGroup]="productForm" (ngSubmit)="onFormSubmit(productForm.value)">
+            <div class="row">
+              <div class="col-12">
+                <mat-form-field class="example-full-width">
+                  <input matInput type="text" placeholder="Product Name" formControlName="prodName"
+                    [errorStateMatcher]="matcher">
 
-      <!-- ISBN Column -->
-      <ng-container matColumnDef="prodDesc">
-        <th mat-header-cell *matHeaderCellDef>Product Description</th>
-        <td mat-cell *matCellDef="let row">{{row.prodDesc}}</td>
-      </ng-container>
+                    <mat-error>
+                        <span *ngIf="!productForm.get('prodName').valid && productForm.get('prodName').touched">Enter Product
+                            Price</span>
+                    </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-12">
+                <mat-form-field class="example-full-width">
+                  <input matInput type="text" placeholder="Product Description" formControlName="prodDesc"
+                    [errorStateMatcher]="matcher">
+                    <mat-error>
+                        <span *ngIf="!productForm.get('prodDesc').valid && productForm.get('prodDesc').touched">Enter Product
+                            Price</span>
+                    </mat-error>
 
-      <!-- Title Column -->
-      <ng-container matColumnDef="prodPrice">
-        <th mat-header-cell *matHeaderCellDef>Product Price</th>
-        <td mat-cell *matCellDef="let row">{{row.prodPrice}}</td>
-      </ng-container>
+                </mat-form-field>
+              </div>
+              <div class="col-12">
+                <mat-form-field class="example-full-width">
+                  <input matInput type="number" placeholder="Product Price" formControlName="prodPrice"
+                    [errorStateMatcher]="matcher">
+                  <mat-error>
+                    <span *ngIf="!productForm.get('prodPrice').valid && productForm.get('prodPrice').touched">Enter Product
+                      Price</span>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="button-row">
+              <button type="submit" [disabled]="!productForm.valid" mat-flat-button color="primary">Submit Product</button>
+            </div>
+          </form>
+        </mat-card>
+  </div>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  <br>
+  <br>
+  <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Product Name</th>
+          <th scope="col">Product Description</th>
+          <th scope="col">Product Price</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let prod of data; let i = index">
+              <th scope="row">{{prod.prodName}}</th>
+              <td>{{prod.prodDesc}}</td>
+              <td>{{prod.prodPrice}}</td>
+              <td><button mat-flat-button color="primary" (click)="deleteProduct(prod)">Delete</button></td>
+        </tr>
+      </tbody>
     </table>
-  </div>
 </div>

@@ -21,6 +21,22 @@ export class ProductService {
       );
   }
 
+  saveProduct(data: any): Observable<any> {
+    return this.http.post<any>(apiUrl + '/', data)
+      .pipe(
+        tap(_ => console.log),
+        catchError(this.handleError('product save', []))
+      );
+  }
+
+  deleteProduct(data: any): Observable<any> {
+    return this.http.delete<any>(apiUrl + '/' + data)
+      .pipe(
+        tap(_ => console.log),
+        catchError(this.handleError('product delete', []))
+      );
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
